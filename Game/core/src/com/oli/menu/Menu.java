@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.oli.core.Button_;
 import com.oli.core.Screen_;
+import com.oli.game.TestLevel;
 import com.oli.main.Game;
 
 public class Menu extends Screen_ {
@@ -32,6 +33,7 @@ public class Menu extends Screen_ {
         playButton = new Button_((Gdx.graphics.getWidth() / 2) - 135, 256, "play");
 
         exitButton.onClick(this::Exit);
+        playButton.onClick(this::Play);
     }
 
     @Override
@@ -89,8 +91,7 @@ public class Menu extends Screen_ {
 
     public void Play() {
 
-        System.out.println("Bye bye!");
-        Gdx.app.exit();
+        getGame().setScreen(new TestLevel(getGame()));
         this.dispose();
 
     }

@@ -1,0 +1,99 @@
+package com.oli.game;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector3;
+import com.oli.core.LevelLoader;
+import com.oli.core.Screen_;
+import com.oli.main.Game;
+
+public class TestLevel extends Screen_ {
+
+    int[][] levelData;
+    int[] playerStart;
+    LevelLoader levelLoader;
+    SpriteBatch batch;
+    OrthographicCamera camera;
+    Vector3 mPos;
+    Texture wall;
+    Player player;
+
+    public TestLevel(Game game) {
+
+        super(game);
+
+    }
+
+    @Override
+    public void show() {
+
+        camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        camera.setToOrtho(true, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        camera.position.x = Gdx.graphics.getWidth() / 2;
+        camera.position.y = Gdx.graphics.getHeight() / 2;
+        batch = new SpriteBatch();
+
+//        wall = new Texture("tiles/wall.png");
+        wall = new Texture("tiles/wallCollisionOutline.png");
+
+        levelLoader = new LevelLoader();
+        levelData = levelLoader.loadLevelFromPNG("testLevel");
+
+        playerStart = new int[2];
+
+        for (int x = 0; x < levelData.length; x++) {
+
+            for (int y = 0; y < levelData[0].length; y++) {
+
+                if (levelData[x][y] == constants.player) {
+
+                    playerStart[0] = x;
+                    playerStart[1] = y;
+                    break;
+
+                }
+
+            }
+
+        }
+
+        player = new Player(playerStart[0], playerStart[1], levelData);
+
+    }
+
+    @Override
+    public void render(float delta) {
+
+        batch.setProjectionMatrix(camera.combined);
+        camera.update();
+
+        batch.begin();
+
+        for (int x = 0; x < levelData.length; x++) {
+
+            for (int y = 0; y < levelData[x].length; y++) {
+
+                switch (levelData[x][y]) {
+
+                    case constants.wall:
+                        batch.draw(wall, x * 32, y * 32);
+                        break;
+
+                }
+
+            }
+
+        }
+
+        player.render(batch, delta);
+
+        batch.end();
+
+        mPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+        camera.unproject(mPos);
+
+    }
+
+}
