@@ -50,6 +50,10 @@ public class LevelLoader {
                         levelData[x][y] = constants.player;
                         break;
 
+                    case constants.red:
+                        levelData[x][y] = constants.lava;
+                        break;
+
                 }
 
             }

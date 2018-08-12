@@ -15,10 +15,14 @@ public class TestLevel extends Screen_ {
     int[] playerStart;
     LevelLoader levelLoader;
     SpriteBatch batch;
+    SpriteBatch guibatch;
     OrthographicCamera camera;
     Vector3 mPos;
     Texture wall;
+    Texture lava;
     Player player;
+    Darkness darkness;
+    Texture outrun;
 
     public TestLevel(Game game) {
 
@@ -34,9 +38,10 @@ public class TestLevel extends Screen_ {
         camera.position.x = Gdx.graphics.getWidth() / 2;
         camera.position.y = Gdx.graphics.getHeight() / 2;
         batch = new SpriteBatch();
+        guibatch = new SpriteBatch();
 
-//        wall = new Texture("tiles/wall.png");
-        wall = new Texture("tiles/wallCollisionOutline.png");
+        wall = new Texture("tiles/wall.png");
+        lava = new Texture("tiles/lava.png");
 
         levelLoader = new LevelLoader();
         levelData = levelLoader.loadLevelFromPNG("testLevel");
@@ -59,7 +64,10 @@ public class TestLevel extends Screen_ {
 
         }
 
-        player = new Player(playerStart[0], playerStart[1], levelData);
+        darkness = new Darkness(30f);
+        player = new Player(playerStart[0], playerStart[1], levelData, darkness, getGame());
+
+        outrun = new Texture("gui/outrun.png");
 
     }
 
@@ -81,6 +89,10 @@ public class TestLevel extends Screen_ {
                         batch.draw(wall, x * 32, y * 32);
                         break;
 
+                    case constants.lava:
+                        batch.draw(lava, x * 32, y * 32);
+                        break;
+
                 }
 
             }
@@ -89,10 +101,16 @@ public class TestLevel extends Screen_ {
 
         player.render(batch, delta);
 
+        darkness.render(batch);
+
         batch.end();
 
         mPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
         camera.unproject(mPos);
+
+        guibatch.begin();
+        guibatch.draw(outrun, 0, -30);
+        guibatch.end();
 
     }
 

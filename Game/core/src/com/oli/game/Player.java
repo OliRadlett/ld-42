@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.oli.main.Game;
 
 import java.util.ArrayList;
 
@@ -21,8 +22,10 @@ public class Player {
     Texture texture;
     Vector2 velocity;
     ArrayList<Rectangle> rectangles;
+    Darkness darkness;
+    Game game;
 
-    public Player(int x, int y, int[][] levelData) {
+    public Player(int x, int y, int[][] levelData, Darkness darkness, Game game) {
 
         texture = new Texture("player/player.png");
         this.x = x * 32;
@@ -33,6 +36,8 @@ public class Player {
         terminalVelocity = 6;
         jumpVelocity = 13;
         moveSpeed = 5;
+        this.darkness = darkness;
+        this.game = game;
 
         rectangles = new ArrayList<>();
 
@@ -41,9 +46,7 @@ public class Player {
 
             for (int ii = 0; ii < levelData[i].length; ii++) {
 
-                if (levelData[i][ii] == constants.wall) {
-
-                    System.out.println("Added rect");
+                if (levelData[i][ii] == constants.wall || levelData[i][ii] == constants.lava) {
 
                     rectangles.add(new Rectangle(i * 32, ii * 32, 32, 32));
 
@@ -63,8 +66,14 @@ public class Player {
 
             if (rectangle.overlaps(r) || r.overlaps(rectangle) || rectangle.contains(r) || r.contains(rectangle)) {
 
-                System.out.println("on ground");
                 y = 32 * (Math.round(y / 32)) + 1;
+
+                if (levelData[x / 32][(y + 32) / 32] == constants.lava) {
+
+                    game.setScreen(new GameOver(game));
+
+                }
+
                 return true;
 
             }
@@ -142,14 +151,6 @@ public class Player {
 
             velocity.y = 0;
 
-//            if (y % 32 != 0) {
-//
-//                System.out.println("Player in floor?");
-////                Hacky way of rounding as you can't have decimals in integer
-//                y = (y / 32) * 32;
-//
-//            }
-
         }
 
 //        Jumping
@@ -187,23 +188,17 @@ public class Player {
 //        Apply vertical velocity
         y += velocity.y;
 
-//        if (!rightFree()) {
-//
-//            if (x % 32 != 0) {
-//
-//                x = (x / 32) * 32;
-//
-//            }
-//
-//        }
 
 //        Render
         batch.draw(texture, x, y);
 
-//        Find out if player is over halfway through tile or not
-//        Tile number: x / 32
-//        Number of tiles = leveldata.length()
-        System.out.println(x / 32);
+        Rectangle rectangle = new Rectangle(x, y, 32, 32);
+
+        if (rectangle.overlaps(darkness.getRectangle()) || darkness.getRectangle().overlaps(rectangle) || rectangle.contains(darkness.getRectangle()) || darkness.getRectangle().contains(rectangle)) {
+
+            game.setScreen(new GameOver(game));
+
+        }
 
     }
 

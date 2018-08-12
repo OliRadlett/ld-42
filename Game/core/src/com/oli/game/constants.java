@@ -13,5 +13,6 @@ public class constants {
     public static final int empty = 0;
     public static final int wall = 1;
     public static final int player = 2;
+    public static final int lava = 3;
 
 }
