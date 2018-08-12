@@ -61,8 +61,6 @@ public class Darkness {
 
     public void render(SpriteBatch batch) {
 
-        System.out.println("Y: " + y + ", rect Y: " + rectangle.y);
-
         if (dir == constants.left || dir == constants.right) {
 
             x -= speed;

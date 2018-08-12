@@ -209,8 +209,18 @@ public class Player {
         if (levelData[x / 32][y / 32] == constants.finish) {
 
             currentLevel.dispose();
-//            Load level data such as darknessDir
-            currentLevel.getGame().setScreen(new Level(currentLevel.getGame(), nextLevel, currentLevel.getDuration(), constants.down) {});
+
+//            This is hacky as shit
+
+            if (nextLevel.equals("level01")) {
+
+                currentLevel.getGame().setScreen(new Level(currentLevel.getGame(), nextLevel, currentLevel.getDuration(), constants.down) {});
+
+            } else if (nextLevel.equals("level11")) {
+
+                currentLevel.getGame().setScreen(new Level(currentLevel.getGame(), nextLevel, currentLevel.getDuration(), constants.up) {});
+
+            }
 
         }
 
