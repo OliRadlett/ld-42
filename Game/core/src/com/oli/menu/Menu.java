@@ -8,6 +8,7 @@ import com.oli.core.Button_;
 import com.oli.core.Music;
 import com.oli.core.Screen_;
 import com.oli.game.Level;
+import com.oli.game.constants;
 import com.oli.main.Game;
 
 public class Menu extends Screen_ {
@@ -97,7 +98,7 @@ public class Menu extends Screen_ {
 
     public void Play() {
 
-        getGame().setScreen(new Level(getGame(), "level0", 21.25f) {});
+        getGame().setScreen(new Level(getGame(), "level0", 21.25f, constants.left) {});
         this.dispose();
 
     }

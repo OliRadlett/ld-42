@@ -16,4 +16,10 @@ public class constants {
     public static final int lava = 3;
     public static final int finish = 4;
 
+//    Directions
+    public static final int left = 0;
+    public static final int right = 1;
+    public static final int up = 2;
+    public static final int down = 3;
+
 }

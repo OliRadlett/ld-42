@@ -59,7 +59,6 @@ public class Player {
         }
 
         nextLevel = "level" + (String.valueOf(currentLevel.getName().charAt(currentLevel.getName().length() - 1)) + 1);
-        System.out.println(nextLevel);
 
     }
 
@@ -76,7 +75,7 @@ public class Player {
                 if (levelData[x / 32][(y + 32) / 32] == constants.lava) {
 
                     currentLevel.dispose();
-                    currentLevel.getGame().setScreen(new Level(currentLevel.getGame(), currentLevel.getName(), currentLevel.getDuration()) {});
+                    currentLevel.getGame().setScreen(new Level(currentLevel.getGame(), currentLevel.getName(), currentLevel.getDuration(), currentLevel.getDarknessDir()) {});
 
                 }
 
@@ -110,7 +109,7 @@ public class Player {
 
     boolean leftFree() {
 
-        if (levelData[(x - moveSpeed) / 32][y / 32] == constants.empty) {
+        if (levelData[(x - moveSpeed) / 32][y / 32] == constants.empty || levelData[(x - moveSpeed) / 32][y / 32] == constants.finish) {
 
             return true;
 
@@ -124,7 +123,7 @@ public class Player {
 
     boolean rightFree() {
 
-        if (levelData[(x + moveSpeed + 32) / 32][y / 32] == constants.empty) {
+        if (levelData[(x + moveSpeed + 32) / 32][y / 32] == constants.empty || levelData[(x + moveSpeed + 32) / 32][y / 32] == constants.finish) {
 
             return true;
 
@@ -203,14 +202,15 @@ public class Player {
         if (rectangle.overlaps(darkness.getRectangle()) || darkness.getRectangle().overlaps(rectangle) || rectangle.contains(darkness.getRectangle()) || darkness.getRectangle().contains(rectangle)) {
 
             currentLevel.dispose();
-            currentLevel.getGame().setScreen(new Level(currentLevel.getGame(), currentLevel.getName(), currentLevel.getDuration()) {});
+            currentLevel.getGame().setScreen(new Level(currentLevel.getGame(), currentLevel.getName(), currentLevel.getDuration(), currentLevel.getDarknessDir()) {});
 
         }
 
         if (levelData[x / 32][y / 32] == constants.finish) {
 
             currentLevel.dispose();
-            currentLevel.getGame().setScreen(new Level(currentLevel.getGame(), nextLevel, currentLevel.getDuration()) {});
+//            Load level data such as darknessDir
+            currentLevel.getGame().setScreen(new Level(currentLevel.getGame(), nextLevel, currentLevel.getDuration(), constants.down) {});
 
         }
 

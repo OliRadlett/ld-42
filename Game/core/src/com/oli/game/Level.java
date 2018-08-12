@@ -25,8 +25,9 @@ public abstract class Level extends Screen_ {
     Texture outrun;
     float duration;
     String name;
+    int darknessDir;
 
-    public Level(Game game, String levelName, float duration) {
+    public Level(Game game, String levelName, float duration, int darknessDir) {
 
         super(game);
 
@@ -63,10 +64,11 @@ public abstract class Level extends Screen_ {
 
         this.duration = duration;
         this.name = levelName;
+        this.darknessDir = darknessDir;
 
         outrun = new Texture("gui/outrun.png");
 
-        darkness = new Darkness(duration);
+        darkness = new Darkness(duration, darknessDir);
         player = new Player(playerStart[0], playerStart[1], levelData, darkness, this);
 
     }
@@ -80,6 +82,12 @@ public abstract class Level extends Screen_ {
     String getName() {
 
         return name;
+
+    }
+
+    int getDarknessDir() {
+
+        return darknessDir;
 
     }
 
