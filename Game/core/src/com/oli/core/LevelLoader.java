@@ -54,6 +54,9 @@ public class LevelLoader {
                         levelData[x][y] = constants.lava;
                         break;
 
+                    case constants.green:
+                        levelData[x][y] = constants.finish;
+                        break;
                 }
 
             }

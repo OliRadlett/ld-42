@@ -1,7 +1,6 @@
 package com.oli.core;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
@@ -26,7 +25,6 @@ public class Button_ {
         this.x = x;
         this.y = y;
         this.textureNoHover = new Texture("buttons/" + name + ".png");
-//        this.textureHover = new Texture("buttons/" + name + "Hover.png");
         this.texture = textureNoHover;
         this.width = texture.getWidth();
         this.height = texture.getHeight();
@@ -50,10 +48,6 @@ public class Button_ {
     public void logic(Vector3 mPos) {
 
         if (this.bounds.contains(mPos.x, mPos.y)) {
-
-            System.out.println("Mouse over " + name);
-
-//            this.texture = textureHover;
 
             if (Gdx.input.justTouched()) {
 

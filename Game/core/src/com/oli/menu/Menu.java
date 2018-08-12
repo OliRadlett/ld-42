@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.oli.core.Button_;
+import com.oli.core.Music;
 import com.oli.core.Screen_;
 import com.oli.game.Level;
 import com.oli.main.Game;
@@ -16,6 +17,7 @@ public class Menu extends Screen_ {
     Button_ playButton;
     OrthographicCamera camera;
     Vector3 mPos;
+    Music music;
 
     public Menu(Game game) {
         super(game);
@@ -34,6 +36,10 @@ public class Menu extends Screen_ {
 
         exitButton.onClick(this::Exit);
         playButton.onClick(this::Play);
+
+        music = new Music();
+        music.load();
+        music.play();
     }
 
     @Override
@@ -91,7 +97,7 @@ public class Menu extends Screen_ {
 
     public void Play() {
 
-        getGame().setScreen(new Level(getGame(), "testLevel", 21.25f) {});
+        getGame().setScreen(new Level(getGame(), "level0", 21.25f) {});
         this.dispose();
 
     }
