@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.oli.core.Button_;
 import com.oli.core.Screen_;
-import com.oli.game.TestLevel;
+import com.oli.game.Level;
 import com.oli.main.Game;
 
 public class Menu extends Screen_ {
@@ -91,7 +91,7 @@ public class Menu extends Screen_ {
 
     public void Play() {
 
-        getGame().setScreen(new TestLevel(getGame()));
+        getGame().setScreen(new Level(getGame(), "testLevel", 21.25f) {});
         this.dispose();
 
     }

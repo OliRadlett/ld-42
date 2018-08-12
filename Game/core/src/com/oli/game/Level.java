@@ -9,7 +9,7 @@ import com.oli.core.LevelLoader;
 import com.oli.core.Screen_;
 import com.oli.main.Game;
 
-public class TestLevel extends Screen_ {
+public abstract class Level extends Screen_ {
 
     int[][] levelData;
     int[] playerStart;
@@ -23,15 +23,11 @@ public class TestLevel extends Screen_ {
     Player player;
     Darkness darkness;
     Texture outrun;
+    float duration;
 
-    public TestLevel(Game game) {
+    public Level(Game game, String levelName, float duration) {
 
         super(game);
-
-    }
-
-    @Override
-    public void show() {
 
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.setToOrtho(true, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -44,7 +40,7 @@ public class TestLevel extends Screen_ {
         lava = new Texture("tiles/lava.png");
 
         levelLoader = new LevelLoader();
-        levelData = levelLoader.loadLevelFromPNG("testLevel");
+        levelData = levelLoader.loadLevelFromPNG(levelName);
 
         playerStart = new int[2];
 
@@ -64,10 +60,19 @@ public class TestLevel extends Screen_ {
 
         }
 
-        darkness = new Darkness(30f);
-        player = new Player(playerStart[0], playerStart[1], levelData, darkness, getGame());
+        darkness = new Darkness(duration);
+        player = new Player(playerStart[0], playerStart[1], levelData, darkness, this);
+
+        this.duration = duration;
 
         outrun = new Texture("gui/outrun.png");
+
+
+    }
+
+    public float getDuration() {
+
+        return duration;
 
     }
 

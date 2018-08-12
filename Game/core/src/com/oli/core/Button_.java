@@ -19,17 +19,19 @@ public class Button_ {
     Texture textureHover;
     Rectangle bounds;
     Runnable callback;
+    String name;
 
     public Button_(int x, int y, String name) {
 
         this.x = x;
         this.y = y;
         this.textureNoHover = new Texture("buttons/" + name + ".png");
-        this.textureHover = new Texture("buttons/" + name + "Hover.png");
-        this.texture = textureHover;
+//        this.textureHover = new Texture("buttons/" + name + "Hover.png");
+        this.texture = textureNoHover;
         this.width = texture.getWidth();
         this.height = texture.getHeight();
         this.bounds = new Rectangle(this.x, this.y, this.width, this.height);
+        this.name = name;
 
     }
 
@@ -49,7 +51,9 @@ public class Button_ {
 
         if (this.bounds.contains(mPos.x, mPos.y)) {
 
-            this.texture = textureHover;
+            System.out.println("Mouse over " + name);
+
+//            this.texture = textureHover;
 
             if (Gdx.input.justTouched()) {
 

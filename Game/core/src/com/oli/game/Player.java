@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.oli.core.Screen_;
 import com.oli.main.Game;
 
 import java.util.ArrayList;
@@ -23,9 +24,9 @@ public class Player {
     Vector2 velocity;
     ArrayList<Rectangle> rectangles;
     Darkness darkness;
-    Game game;
+    Level currentLevel;
 
-    public Player(int x, int y, int[][] levelData, Darkness darkness, Game game) {
+    public Player(int x, int y, int[][] levelData, Darkness darkness, Level currentLevel) {
 
         texture = new Texture("player/player.png");
         this.x = x * 32;
@@ -37,7 +38,7 @@ public class Player {
         jumpVelocity = 13;
         moveSpeed = 5;
         this.darkness = darkness;
-        this.game = game;
+        this.currentLevel = currentLevel;
 
         rectangles = new ArrayList<>();
 
@@ -70,7 +71,8 @@ public class Player {
 
                 if (levelData[x / 32][(y + 32) / 32] == constants.lava) {
 
-                    game.setScreen(new GameOver(game));
+                    currentLevel.dispose();
+                    currentLevel.getGame().setScreen(new Level(currentLevel.getGame(), "testLevel", currentLevel.getDuration()) {});
 
                 }
 
@@ -196,7 +198,8 @@ public class Player {
 
         if (rectangle.overlaps(darkness.getRectangle()) || darkness.getRectangle().overlaps(rectangle) || rectangle.contains(darkness.getRectangle()) || darkness.getRectangle().contains(rectangle)) {
 
-            game.setScreen(new GameOver(game));
+            currentLevel.dispose();
+            currentLevel.getGame().setScreen(new Level(currentLevel.getGame(), "testLevel", currentLevel.getDuration()) {});
 
         }
 
